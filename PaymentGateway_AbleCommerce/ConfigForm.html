@@ -1,0 +1,124 @@
+﻿<p>THIS IS A CUSTOM PAYMENT GATEWAY JUST FOR TESTING  -- ANTHONY </p>
+<table cellspacing="0" class="inputForm">
+  <tbody>
+    <tr>
+      <th style="width:150px;">
+        <a href="#" onclick="return false;" class="toolTip" title="The integration assembly name and version." tabindex="-1">
+          <span>Assembly:</span>
+        </a>
+      </th>
+      <td>
+        <span>$assemblyInfo</span>
+      </td>
+    </tr>
+    <tr>
+      <th valign="Top" style="width:150px;">
+        <a href="#" onclick="return false;" class="toolTip" title="Enter your cashflows login." tabindex="-1">
+          <span>Cashflows ID:</span>
+        </a>
+      </th>
+      <td valign="Top">
+        <input type="text" size="20" maxlength="50" name="${idBase}_MerchantLogin" value="$MerchantLogin"/>
+        <br/>
+        <input type="checkbox" name="${idBase}_IsSecureSource" #if($IsSecureSource)checked="checked"#end=""/>&nbsp;Check here if you are a Wells Fargo SecureSource merchant.
+      </td>
+    </tr>
+    <tr>
+      <th valign="Top" style="width:150px;">
+        <a href="#" onclick="return false;" class="toolTip" title="Enter your cashflows merchant account password." tabindex="-1">
+          <span>Cashflows password:</span>
+        </a>
+      </th>
+      <td valign="Top">
+        <input type="text" size="20" maxlength="50" name="${idBase}_TransactionKey" value="$TransactionKey"/>
+      </td>
+    </tr>
+    <tr>
+      <th valign="Top" style="width:150px;">
+        <a href="#" onclick="return false;" class="toolTip" title="Use &quot;Authorize&quot; to request authorization without capturing funds at the time of purchase. You can capture authorized transactions through the order admin interface. Use &quot;Authorize &amp; Capture&quot; to capture funds immediately at the time of purchase." tabindex="-1">
+          <span>Authorization Mode:</span>
+        </a>
+      </th>
+      <td valign="Top">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <input type="radio" value="false" name="${idBase}_UseAuthCapture" #if(!$UseAuthCapture)checked="checked"#end="" />
+                <label>Authorize (recommended)</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" value="true" name="${idBase}_UseAuthCapture" #if($UseAuthCapture)checked="checked"#end="" />
+                <label>Authorize &amp; Capture</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+   <!-- <tr>
+      <th valign="Top" style="width:150px;">
+        <a href="#" onclick="return false;" class="toolTip" title="You can configure AbleCommerce to use either the production or test gateway with live or test transactions. Enabling test mode will override the live mode option set here." tabindex="-1">
+          <span>Gateway Mode:</span>
+        </a>
+      </th>
+      <td valign="Top">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <input type="radio" value="0" name="${idBase}_GatewayMode" #if($GatewayMode="ProductionServerLiveMode")checked="checked"#end=""/>
+                <label>Production Gateway, Live Mode</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" value="1" name="${idBase}_GatewayMode" #if($GatewayMode="ProductionServerTestMode")checked="checked"#end=""/>
+                <label>Production Gateway, Test Mode</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" value="2" name="${idBase}_GatewayMode" #if($GatewayMode="TestServerLiveMode")checked="checked"#end=""/>
+                <label>Test Gateway, Live Mode</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" value="3" name="${idBase}_GatewayMode" #if($GatewayMode="TestServerTestMode")checked="checked"#end=""/>
+                <label>Test Gateway, Test Mode</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>-->
+    <tr>
+      <th valign="Top" style="width:150px;">
+        <a href="#" onclick="return false;" class="toolTip" title="When debug mode is enabled, the communication between AbleCommerce and the payment gateway is recorded in the store &quot;logs&quot; folder. Sensitive information is stripped from the log entries." tabindex="-1">
+          <span>Debug Mode:</span>
+        </a>
+      </th>
+      <td valign="Top">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <input type="radio" value="false" name="${idBase}_UseDebugMode" #if(!$UseDebugMode)checked="checked"#end=""/>
+                <label>Off</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="radio" value="true" name="${idBase}_UseDebugMode" #if($UseDebugMode)checked="checked"#end=""/>
+                <label>On</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
