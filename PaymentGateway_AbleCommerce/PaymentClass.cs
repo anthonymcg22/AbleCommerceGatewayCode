@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using System.Xml;
+//must reference CommerceBuilder and NVelocity dll
 using CommerceBuilder.Orders;
 using CommerceBuilder.Payments;
 using CommerceBuilder.Products;
@@ -21,14 +22,17 @@ using CommerceBuilder.Payments.Providers;
 
 namespace PaymentGateway_AbleCommerce
 {
+    //inherits from PaymentProviderBase class in order to keep up with updates on Able Commerce's part
+    //class modified from sample code provided by Able Commerce
     public class PaymentClass : CommerceBuilder.Payments.Providers.PaymentProviderBase
     {
-
+        //set all const string values to same cashflows url
         public const string DEFAULT_XML_API_LIVEURL = "https://secure.cashflows.com/gateway/remote";
         public const string DEFAULT_XML_API_TESTURL = "https://secure.cashflows.com/gateway/remote";
         public const string DEFAULT_NV_API_LIVEURL = "https://secure.cashflows.com/gateway/remote";
         public const string DEFAULT_NV_API_TESTURL = "https://secure.cashflows.com/gateway/remote";
 
+        //must declare certain variables in inheriting class
         string _MerchantLogin;
         string _TransactionKey;
         bool _UseAuthCapture = false;
@@ -95,7 +99,7 @@ namespace PaymentGateway_AbleCommerce
 
         public override string Name
         {
-            get { return "Anthony's Payment Gateway"; }
+            get { return "A Custom Payment Gateway"; }
         }
 
         public override string Description
@@ -106,7 +110,7 @@ namespace PaymentGateway_AbleCommerce
         public override string GetLogoUrl(ClientScriptManager cs)
         {
             if (cs != null)
-                return cs.GetWebResourceUrl(this.GetType(), "PaymentGateway_AbleCommerce.AESGateway.png");
+                return cs.GetWebResourceUrl(this.GetType(), "PaymentGateway_AbleCommerce.AESGateway.png"); //custom logo
             return string.Empty;
         }
 
@@ -150,11 +154,12 @@ namespace PaymentGateway_AbleCommerce
             }
         }
 
-        //Initialize method must be overridden in the inheriting class, inherits from PaymentProviderBase class
+        //Initialize method must be overridden in the inheriting class
         public override void Initialize(int PaymentGatewayId, IDictionary<string, string> ConfigurationData)
         {
             base.Initialize(PaymentGatewayId, ConfigurationData);
 
+            //getting configuration data from ConfigForm.html that the user fills out info on
             if (ConfigurationData.ContainsKey("MerchantLogin")) MerchantLogin = ConfigurationData["MerchantLogin"];
             if (ConfigurationData.ContainsKey("TransactionKey")) TransactionKey = ConfigurationData["TransactionKey"];
             if (ConfigurationData.ContainsKey("UseAuthCapture")) UseAuthCapture = AlwaysConvert.ToBool(ConfigurationData["UseAuthCapture"], true);
@@ -167,6 +172,7 @@ namespace PaymentGateway_AbleCommerce
             NvApiTestUrl = DEFAULT_NV_API_TESTURL;
         }
 
+        //BuildConfigForm method must be overridden in the inheriting class
         public override void BuildConfigForm(Control parentControl)
         {
             string idBase = parentControl.Parent.UniqueID + "$Config";
@@ -390,6 +396,7 @@ namespace PaymentGateway_AbleCommerce
 
         private string BuildGatewayRequestPart_MerchantAccountInformation()
         {
+            //need auth_id and auth_pass as part of http request parameters
             if (this.GatewayMode == GatewayModeOption.ProductionServerTestMode || this.GatewayMode == GatewayModeOption.TestServerTestMode)
             {
                 return String.Format("auth_id={0}&auth_pass={1}", this.MerchantLogin, this.TransactionKey);
@@ -871,6 +878,8 @@ namespace PaymentGateway_AbleCommerce
             //PROCESS RESPONSE AND RETURN RESULT
             return this.ProcessGatewayResponse_Refund(refundRequest.Payment, response, refundRequest);
         }
+
+        //I am not using Recurring Transactions for this particular shopping cart site so I commented out the method
 
         //public override AuthorizeRecurringTransactionResponse DoAuthorizeRecurring(AuthorizeRecurringTransactionRequest authorizeRequest)
         //{
